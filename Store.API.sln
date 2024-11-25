@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.API", "Store.API.csproj", "{8C679362-C955-4125-B9FB-898702E3E42A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.Data", "..\Store.Data\Store.Data.csproj", "{B0C1D398-659A-4EBD-B0B2-EE528F9D0ECB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.data", "..\Store.Data\Store.data.csproj", "{B0C1D398-659A-4EBD-B0B2-EE528F9D0ECB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store.Repository", "..\Store.Repository\Store.Repository.csproj", "{D667C8A0-4170-4263-B261-BCF749A63DBE}"
 EndProject

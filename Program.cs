@@ -1,5 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using Store.API.Dtos;
+using Store.API.Helper;
 using Store.Data.Context;
+using Store.Data.Entity;
 using Store.Repository.InterFace;
 using Store.Repository.Repository;
 using Store.Repository.SeedData;
@@ -8,7 +12,8 @@ namespace Store.API
 {
     public class Program
 	{
-		public static async Task Main(string[] args)
+        [Obsolete]
+        public static async Task Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +22,7 @@ namespace Store.API
 			builder.Services.AddControllers();
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
-
-			#endregion
-
-
+			
 			#region Connecting to DataBase
 			builder.Services.AddDbContext<StoreDbContext>(Options =>
 				{
@@ -28,8 +30,12 @@ namespace Store.API
 				});
 			#endregion
 
-			#region Allow Dependancy injection
-			builder.Services.AddScoped(typeof(IGenaricRepo<>), typeof(GenaricRepo<>));
+            #endregion configuration services
+
+            #region Allow Dependancy injection
+            builder.Services.AddScoped(typeof(IGenaricRepo<>), typeof(GenaricRepo<>));
+			//builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfile()));
+			builder.Services.AddAutoMapper(typeof(MappingProfile));
 			#endregion
 
 			var app = builder.Build();
