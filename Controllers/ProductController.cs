@@ -35,7 +35,7 @@ namespace Store.API.Controllers
         public async Task<ActionResult<Product>> GetById(int id)
         {
             // Apply specification to fetch the product by its ID
-            var spec = new ProductSpecification();
+            var spec = new ProductSpecification(id);
             var productById = await _genaricRepo.GetWithSpecAsync(spec);
             
             if (productById == null)
