@@ -23,19 +23,17 @@ namespace Store.API
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 			
-			#region Connecting to DataBase
+			/// Connecting to DataBase
 			builder.Services.AddDbContext<StoreDbContext>(Options =>
 				{
 					Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 				});
-			#endregion
-
+			//builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfile()));
+			builder.Services.AddAutoMapper(typeof(MappingProfile));
             #endregion configuration services
 
             #region Allow Dependancy injection
             builder.Services.AddScoped(typeof(IGenaricRepo<>), typeof(GenaricRepo<>));
-			//builder.Services.AddAutoMapper(m => m.AddProfile(new MappingProfile()));
-			builder.Services.AddAutoMapper(typeof(MappingProfile));
 			#endregion
 
 			var app = builder.Build();

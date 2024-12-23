@@ -8,10 +8,11 @@ namespace Store.API.Helper
     {
         public MappingProfile()
         {
+            // Mapping Product entity to ProductToReturnDto
             CreateMap<Product, ProductToReturnDto>()
-                .ForMember(d => d.Brand, o => o.MapFrom(s => s.Brand.Name))
-                .ForMember(d=>d.Category,option=>option.MapFrom(s=>s.Category.Name));
-            
+                .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand.Name)) // Map Brand Name
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name)) // Map Category Name
+                .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom<ProductUrlResolver>()); // Resolve Picture URL
         }
     }
 }
