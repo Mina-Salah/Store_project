@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store.API.Dtos;
+using Store.API.Error;
 using Store.Data.Entity;
 using Store.Repository.InterFace;
 using Store.Repository.Repository;
@@ -26,15 +27,24 @@ namespace Store.API.Controllers
         }
 
         // /api/Product
+        [ProducesResponseType(typeof(IEnumerable<ProductToReturnDto>), 200)]
+        [ProducesResponseType(typeof(ApiResponse), 404)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProduct(string sort)
         {
-            // Apply specification with filters for brand and category
-            var spec = new ProductSpecification();
-            var product = await _productRepo.GetAllWithSpecAsync(spec);
-            return Ok(_mapper.Map<IEnumerable< Product>,IEnumerable< ProductToReturnDto>>(product));
+            var spec = new ProductSpecification(sort);
+            var products = await _productRepo.GetAllWithSpecAsync(spec);
+
+            if (!products.Any())
+            {
+                return NotFound(new ApiResponse(404));
+            }
+
+            return Ok(_mapper.Map<IEnumerable<Product>, IEnumerable<ProductToReturnDto>>(products));
         }
         // /api/Product/id
+        [ProducesResponseType(typeof(IEnumerable<ProductToReturnDto>), 200)]
+        [ProducesResponseType(typeof(ApiResponse), 404)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductToReturnDto>> GetById(int id)
         {
@@ -43,7 +53,7 @@ namespace Store.API.Controllers
             var productById = await _productRepo.GetWithSpecAsync(spec);
             
             if (productById == null)
-                return NotFound();// Return 404 if the product doesn't exist  
+                return NotFound(new ApiResponse(404));// Return 404 if the product doesn't exist  
 
             return Ok(_mapper.Map<Product,ProductToReturnDto>(productById));// Return the product if found
         }
