@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store.API.Error;
+using Store.core.Entity;
 using Store.Data.Entity;
 using Store.Repository.InterFace;
 
